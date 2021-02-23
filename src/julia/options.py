@@ -143,8 +143,9 @@ class JuliaOptions(object):
         # Read in default options from environmental variable PYJULIA_OPTIONS_*
         env_prefix = "PYJULIA_OPTIONS_"
         for key in os.environ.keys():
-          if not k.startswith(env_prefix): continue
+          if not key.startswith(env_prefix): continue
           k = lower(key[len(env_prefix):])
+          print(k)
           if k not in kwargs:
             kwargs[key] = os.environ[k]
 
