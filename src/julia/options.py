@@ -1,7 +1,7 @@
 from __future__ import absolute_import, print_function
 
 import textwrap
-
+import os
 
 class OptionDescriptor(object):
     @property
@@ -139,6 +139,15 @@ class JuliaOptions(object):
     check_bounds = Choices("check_bounds", yes_no_etc())
 
     def __init__(self, **kwargs):
+        
+        # Read in default options from environmental variable PYJULIA_OPTIONS_*
+        env_prefix = "PYJULIA_OPTIONS_"
+        for key in os.environ.keys():
+          if not k.startswith(env_prefix): continue
+          k = lower(key[len(env_prefix):])
+          if k not in kwargs:
+            kwargs[key] = os.environ[k]
+
         unsupported = []
         for (name, value) in kwargs.items():
             if self.is_supported(name):
