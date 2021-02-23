@@ -144,10 +144,9 @@ class JuliaOptions(object):
         env_prefix = "PYJULIA_OPTIONS_"
         for key in os.environ.keys():
           if not key.startswith(env_prefix): continue
-          k = lower(key[len(env_prefix):])
-          print(k)
+          k = key[len(env_prefix):].lower()
           if k not in kwargs:
-            kwargs[key] = os.environ[k]
+            kwargs[k] = os.environ[key]
 
         unsupported = []
         for (name, value) in kwargs.items():
